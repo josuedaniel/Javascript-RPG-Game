@@ -22,4 +22,21 @@ const monsterNameText = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
 
 // initialize buttons
+button1.onclick = goStore;
+button2.onclick = goCave;
+button3.onclick = fightDragon;
 
+
+// Create functions
+
+function goStore() {
+    console.log("going to store.")
+}
+
+function goCave() {
+    console.log("Going to the cave.")
+}
+
+function fightDragon() {
+    console.log("Fighting the dragon")
+}
