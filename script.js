@@ -98,6 +98,12 @@ const locations = [
         "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
         "button functions": [restart, restart, restart],
         text: "You died."
+    },
+    {
+        name: "win",
+        "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
+        "button functions": [restart, restart, restart],
+        text: "You defeat the dragon! YOU WIN THE GAME!"
     }
 ]
 // initialize buttons
@@ -110,7 +116,7 @@ button3.onclick = fightDragon;
 
 function update(location) {
     // Change button text for goTown options
-    monsterStats.getElementsByClassName.display = "none";
+    monsterStats.style.display = "none";
     button1.innerText = location["button text"][0];
     button2.innerText = location["button text"][1];
     button3.innerText = location["button text"][2];
@@ -157,6 +163,7 @@ function buyWeapon() {
         if (gold >= 30) {
             gold -= 30
             currentWeapon++;
+            goldText.innerText = gold;
             let newWeapon = weapons[currentWeapon].name;
             text.innerText = "You now have a new " + newWeapon + ".";
             inventory.push(newWeapon);
@@ -201,19 +208,23 @@ function fightDragon() {
 function goFight() {
     update(locations[3]);
     monsterHealth = monsters[fighting].health;
-    monsterStats.getElementsByClassName.display = "block";
+    monsterStats.style.display = "block";
     monsterNameText.innerText = monsters[fighting].name;
     monsterHealthText.innerText = monsterHealth;
+    text.innerText = "You are fighting a monster!";
 }
+
 function attack() {
     text.innerText = "The " + monsters[fighting].name + " attacks.";
     text.innerText += " You attack it with your " + weapons[currentWeapon].name + ".";
     health -= monsters[fighting].level;
     monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
+    healthText.innerText = health;
+    monsterHealthText.innerText = monsterHealth;
     if (health <= 0) {
         lose();
     } else if (monsterHealth <= 0) {
-        defeatMonster();
+        fighting === 2 ? winGame() : defeatMonster();
     }
 
 }
@@ -232,6 +243,10 @@ function defeatMonster() {
 
 function lose() {
     update(locations[5]);
+}
+
+function winGame() {
+    update(locations[6]);
 }
 
 function restart() {
